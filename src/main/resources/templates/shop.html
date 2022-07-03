@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<title>Shop</title>
+</head>
+<body>
+
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#"> <img
+				th:src="@{/images/logo.jpg}" width="auto" height="40"
+				class="d-inline-block align-top" alt="" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto"></ul>
+				<ul class="navbar-nav">
+					<li class="nav-item active"><a class="nav-link" th:href="@{/}"
+						href="#">home</a></li>
+					<li class="nav-item active"><a class="nav-link"
+						th:href="@{/shop}" href="#">shop</a></li>
+					<li class="nav-item active"><a class="nav-link"
+						sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
+					</li>
+					<li class="nav-item active"><a class="nav-link"
+						sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>
+					</li>
+					<li class="nav-item active"><a class="nav-link"
+						th:href="@{/cart}" href="#">cart</a></li>
+					<li class="nav-item active"><span class="nav-link"
+						th:text="${cartCount}">0</span></li>
+				</ul>
+
+			</div>
+		</div>
+	</nav>
+	<div style="margin-top: 30px; margin-left: 40px;">
+		<div class="row">
+			<div class="col-sm-2">
+				<h4>Categories</h4>
+				<ul class="list-group">
+					<a th:href="@{/shop}"><li class="list-group-item">All
+							Products</li></a>
+					<a href="" th:each="category, iStat : ${categories}"
+						th:href="@{/shop/category/{id}(id=${category.id})}"><li
+						class="list-group-item" th:text="${category.name}"></li></a>
+
+				</ul>
+			</div>
+			<div class="col-sm-9">
+				<table class="table" border="1">
+					<thead>
+						<tr>
+							<th scope="col">Product ID</th>
+							<th scope="col">Product Name</th>
+							<th scope="col">Product Size</th>
+							<th scope="col">Product Description</th>
+							<th scope="col">Product Price</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="product: ${products}">
+							<td th:text="${product.id}">Larry</td>
+							<td th:text="${product.productName}">Larry</td>
+							<td th:text="${product.size}">Larry</td>
+							<td th:text="${product.description}">Larry</td>
+							<td th:text="${product.productPrice}">Larry</td>
+							<td ><a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" >Add to cart</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
